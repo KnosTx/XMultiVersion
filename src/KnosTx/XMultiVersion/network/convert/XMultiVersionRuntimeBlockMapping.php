@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace KnosTx\XMultiVersion\network\convert;
 
 use KnosTx\XMultiVersion\Loader;
+use KnosTx\XMultiVersion\network\NetworkBinaryStream;
 use KnosTx\XMultiVersion\network\ProtocolConstants;
 use pocketmine\block\BlockTypeIds;
 use pocketmine\nbt\NetworkLittleEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\convert\R12ToCurrentBlockMapEntry;
-use pocketmine\network\mcpe\NetworkBinaryStream;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\utils\AssumptionFailedError;
 use function file_get_contents;
