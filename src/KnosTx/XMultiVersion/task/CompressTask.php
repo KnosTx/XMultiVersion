@@ -21,18 +21,18 @@ class CompressTask extends AsyncTask{
     private $fail = false;
 
     /** @var int */
-    private $level;
+    private $World;
 
     public function __construct(BatchPacket $packet, callable $callback) {
         $packet->reset();
         $this->payload = $packet->payload;
         $this->storeLocal([$packet, $callback]);
-        $this->level = Server::getInstance()->networkCompressionLevel;
+        $this->world = Server::getInstance()->networkCompressionWorld;
     }
 
     public function onRun(){
         try{
-            $this->setResult(zlib_encode($this->payload, ZLIB_ENCODING_RAW, $this->level));
+            $this->setResult(zlib_encode($this->payload, ZLIB_ENCODING_RAW, $this->world));
         } catch(\Exception $e) {
             $this->fail = true;
         }

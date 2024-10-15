@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace KnosTx\XMultiVersion\network;
 
-use pocketmine\level\format\Chunk;
-use pocketmine\level\Level;
-use pocketmine\network\mcpe\protocol\LevelChunkPacket;
+use pocketmine\worldformat\Chunk;
+use pocketmine\worldWorld;
+use pocketmine\network\mcpe\protocol\WorldChunkPacket;
 use pocketmine\tile\Spawnable;
 use function chr;
 
 class Chunk112{
 
-    public static function serialize(Level $level, LevelChunkPacket $origin): ?LevelChunkPacket{
+    public static function serialize(World $world, WorldChunkPacket $origin): ?WorldChunkPacket{
         $x = $origin->getChunkX();
         $z = $origin->getChunkZ();
-        $chunk = $level->getChunk($x, $z);
+        $chunk = $world->getChunk($x, $z);
         if($chunk !== null){
             $payload = self::networkSerialize($chunk);
-            return LevelChunkPacket::create($x, $z, $origin->getSubChunkCount() - 4, false, $origin->getUsedBlobHashes(),  $payload);
+            return WorldChunkPacket::create($x, $z, $origin->getSubChunkCount() - 4, false, $origin->getUsedBlobHashes(),  $payload);
         }
         return null;
     }

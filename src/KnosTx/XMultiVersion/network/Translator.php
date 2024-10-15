@@ -38,9 +38,9 @@ use pocketmine\network\mcpe\protocol\GameRulesChangedPacket;
 use pocketmine\network\mcpe\protocol\InventoryContentPacket;
 use pocketmine\network\mcpe\protocol\InventorySlotPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
-use pocketmine\network\mcpe\protocol\LevelChunkPacket;
-use pocketmine\network\mcpe\protocol\LevelEventPacket;
-use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
+use pocketmine\network\mcpe\protocol\WorldChunkPacket;
+use pocketmine\network\mcpe\protocol\WorldEventPacket;
+use pocketmine\network\mcpe\protocol\WorldSoundEventPacket;
 use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\network\mcpe\protocol\MobArmorEquipmentPacket;
 use pocketmine\network\mcpe\protocol\MobEquipmentPacket;
@@ -77,12 +77,12 @@ class Translator{
                 self::decodeHeader($packet);
                 InventoryTransactionPacketTranslator::deserialize($packet, $protocol);
                 return $packet;
-            case LevelSoundEventPacket::NETWORK_ID:
-                /** @var LevelSoundEventPacket $packet */
+            case WorldSoundEventPacket::NETWORK_ID:
+                /** @var WorldSoundEventPacket $packet */
                 $packet->decode();
                 switch($packet->sound) {
-                    case LevelSoundEventPacket::SOUND_PLACE:
-                    case LevelSoundEventPacket::SOUND_BREAK_BLOCK:
+                    case WorldSoundEventPacket::SOUND_PLACE:
+                    case WorldSoundEventPacket::SOUND_BREAK_BLOCK:
                         $block = XMultiVersionRuntimeBlockMapping::fromStaticRuntimeId($packet->extraData, $protocol);
                         $packet->extraData = RuntimeBlockMapping::toStaticRuntimeId($block[0], $block[1]);
                         return $packet;
@@ -119,11 +119,11 @@ class Translator{
                 $block = RuntimeBlockMapping::fromStaticRuntimeId($packet->blockRuntimeId);
                 $packet->blockRuntimeId = XMultiVersionRuntimeBlockMapping::toStaticRuntimeId($block[0], $block[1], $protocol);
                 return $packet;
-            case LevelSoundEventPacket::NETWORK_ID:
-                /** @var LevelSoundEventPacket $packet */
+            case WorldSoundEventPacket::NETWORK_ID:
+                /** @var WorldSoundEventPacket $packet */
                 switch($packet->sound) {
-                    case LevelSoundEventPacket::SOUND_PLACE:
-                    case LevelSoundEventPacket::SOUND_BREAK_BLOCK:
+                    case WorldSoundEventPacket::SOUND_PLACE:
+                    case WorldSoundEventPacket::SOUND_BREAK_BLOCK:
                         $block = RuntimeBlockMapping::fromStaticRuntimeId($packet->extraData);
                         $packet->extraData = XMultiVersionRuntimeBlockMapping::toStaticRuntimeId($block[0], $block[1], $protocol);
                         return $packet;
@@ -140,16 +140,16 @@ class Translator{
                         return $packet;
                 }
                 return $packet;
-            case LevelEventPacket::NETWORK_ID:
-                /** @var LevelEventPacket $packet */
+            case WorldEventPacket::NETWORK_ID:
+                /** @var WorldEventPacket $packet */
                 switch($packet->evid) {
-                    case LevelEventPacket::EVENT_PARTICLE_DESTROY:
+                    case WorldEventPacket::EVENT_PARTICLE_DESTROY:
                         $block = RuntimeBlockMapping::fromStaticRuntimeId($packet->data);
                         $packet->data = XMultiVersionRuntimeBlockMapping::toStaticRuntimeId($block[0], $block[1], $protocol);
                         return $packet;
-                    case LevelEventPacket::EVENT_PARTICLE_PUNCH_BLOCK:
+                    case WorldEventPacket::EVENT_PARTICLE_PUNCH_BLOCK:
                         $position = $packet->position;
-                        $block = $player->getLevelNonNull()->getBlock($position);
+                        $block = $player->getWorldNonNull()->getBlock($position);
                         if($block->getId() === 0) {
                             return null;
                         }
@@ -158,11 +158,11 @@ class Translator{
                         return $packet;
                 }
                 return $packet;
-            case LevelChunkPacket::NETWORK_ID:
-                /** @var LevelChunkPacket $packet */
+            case WorldChunkPacket::NETWORK_ID:
+                /** @var WorldChunkPacket $packet */
                 if($protocol <= ProtocolConstants::BEDROCK_1_21_0) {
-                    if($player->getLevel() !== null){
-                        return Chunk112::serialize($player->getLevel(), $packet);
+                    if($player->getWorld() !== null){
+                        return Chunk112::serialize($player->getWorld(), $packet);
                     }
                     return null;
                 }

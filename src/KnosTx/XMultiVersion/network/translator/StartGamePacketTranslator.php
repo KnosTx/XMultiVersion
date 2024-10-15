@@ -22,7 +22,7 @@ class StartGamePacketTranslator {
         ($packet->buffer .= (\pack("g", $packet->pitch)));
         ($packet->buffer .= (\pack("g", $packet->yaw)));
 
-        //Level settings
+        //World settings
         $packet->putVarInt($packet->seed);
         $packet->spawnSettings->write($packet);
         $packet->putVarInt($packet->generator);
@@ -34,8 +34,8 @@ class StartGamePacketTranslator {
         $packet->putVarInt($packet->eduEditionOffer);
         ($packet->buffer .= ($packet->hasEduFeaturesEnabled ? "\x01" : "\x00"));
         $packet->putString($packet->eduProductUUID);
-        ($packet->buffer .= (\pack("g", $packet->rainLevel)));
-        ($packet->buffer .= (\pack("g", $packet->lightningLevel)));
+        ($packet->buffer .= (\pack("g", $packet->rainWorld)));
+        ($packet->buffer .= (\pack("g", $packet->lightningWorld)));
         ($packet->buffer .= ($packet->hasConfirmedPlatformLockedContent ? "\x01" : "\x00"));
         ($packet->buffer .= ($packet->isMultiplayerGame ? "\x01" : "\x00"));
         ($packet->buffer .= ($packet->hasLANBroadcast ? "\x01" : "\x00"));
@@ -69,7 +69,7 @@ class StartGamePacketTranslator {
             ($packet->buffer .= ($packet->experimentalGameplayOverride ? "\x01" : "\x00"));
         }
 
-        $packet->putString($packet->levelId);
+        $packet->putString($packet->worldId);
         $packet->putString($packet->worldName);
         $packet->putString($packet->premiumWorldTemplateId);
         ($packet->buffer .= ($packet->isTrial ? "\x01" : "\x00"));
@@ -96,7 +96,7 @@ class StartGamePacketTranslator {
         if($protocol >= ProtocolConstants::BEDROCK_1_21_0){
             $packet->putString($packet->serverSoftwareVersion);
         }
-        if($protocol >= ProtocolConstants::BEDROCK_1.21.30){
+        if($protocol >= ProtocolConstants::BEDROCK_1_21_30){
             $packet->putLLong(0);
         }
     }

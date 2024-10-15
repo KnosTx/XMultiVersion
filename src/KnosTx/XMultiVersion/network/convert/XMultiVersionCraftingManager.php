@@ -19,7 +19,7 @@ class XMultiVersionCraftingManager extends CraftingManager{
     protected $XMultiVersionCraftingDataCache = [];
 
     const PROTOCOL = [
-        ProtocolConstants::BEDROCK_1.21.30,
+        ProtocolConstants::BEDROCK_1_21_30,
         ProtocolConstants::BEDROCK_1_21_20,
         ProtocolConstants::BEDROCK_1_21_0,
         ProtocolConstants::BEDROCK_1_20_80
@@ -54,7 +54,7 @@ class XMultiVersionCraftingManager extends CraftingManager{
 
             $batch = new BatchPacket();
             $batch->addPacket($pk);
-            $batch->setCompressionLevel(Server::getInstance()->networkCompressionLevel);
+            $batch->setCompressionWorld(Server::getInstance()->networkCompressionWorld);
             $batch->encode();
 
             $this->XMultiVersionCraftingDataCache[$protocol] = $batch;

@@ -129,7 +129,7 @@ class EventListener implements Listener{
             }
             $batch = new BatchPacket();
             $batch->addPacket($newPacket);
-            $batch->setCompressionLevel(Server::getInstance()->networkCompressionLevel);
+            $batch->setCompressionWorld(Server::getInstance()->networkCompressionWorld);
             $batch->encode();
             $this->cancel_send = true;
             $player->sendDataPacket($batch);
@@ -167,7 +167,7 @@ class EventListener implements Listener{
             return;
         }
         $this->cancel_send = true;
-        $newPacket->setCompressionLevel(Server::getInstance()->networkCompressionLevel);
+        $newPacket->setCompressionWorld(Server::getInstance()->networkCompressionWorld);
         $newPacket->encode();
         $player->sendDataPacket($newPacket);
         $this->cancel_send = false;
