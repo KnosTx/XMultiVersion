@@ -3,7 +3,6 @@ api: 5.0.0
 main: KnosTx\XMultiVersion\Loader
 version: 0.1.0
 description: A plugin to allows older Minecraft client versions to connect to newer server versions.
-mcpe-protocol: 729
 author: KnosTx
 permissions:
   multiversion.command:
