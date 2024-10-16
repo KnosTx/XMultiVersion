@@ -822,7 +822,7 @@ class NetworkBinaryStream extends BinaryStream{
 	public function getNbtRoot() : NamedTag{
 		$offset = $this->getOffset();
 		try{
-			$result = (new NetworkLittleEndianNBTStream())->read($this->getBuffer(), false, $offset, 512);
+			$result = (new \KnosTx\XMultiVersion\nbt\NetworkLittleEndianNBTStream())->read($this->getBuffer(), false, $offset, 512);
 			assert($result instanceof NamedTag, "doMultiple is false so we should definitely have a NamedTag here");
 			return $result;
 		}finally{
