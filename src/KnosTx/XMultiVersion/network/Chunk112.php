@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace KnosTx\XMultiVersion\network;
 
-use pocketmine\worldformat\Chunk;
-use pocketmine\worldWorld;
+use pocketmine\world\format\Chunk;
+use pocketmine\world\World;
 use pocketmine\network\mcpe\protocol\WorldChunkPacket;
 use pocketmine\tile\Spawnable;
 use function chr;
