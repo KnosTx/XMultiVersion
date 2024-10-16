@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace KnosTx\XMultiVersion\network;
 
+use KnosTx\XMultiVersion\nbt\LittleEndianNBTStream;
+use KnosTx\XMultiVersion\nbt\NetworkLittleEndianNBTStream;
 use pocketmine\block\BlockTypeUds as BlockIds;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
@@ -12,8 +14,6 @@ use pocketmine\item\Item;
 use pocketmine\item\VanillaItems as ItemFactory;
 use pocketmine\item\ItemTypeIds as ItemIds;
 use pocketmine\math\Vector3;
-use KnosTx\XMultiVersion\nbt\LittleEndianNBTStream;
-use KnosTx\XMultiVersion\nbt\NetworkLittleEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\NamedTag;
